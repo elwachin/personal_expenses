@@ -1,6 +1,6 @@
 # expense_planner
 
-A new Flutter project.
+A new Flutter project that help you to track your weekly expenses
 
 ## Getting Started
 
