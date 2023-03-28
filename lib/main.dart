@@ -1,4 +1,4 @@
-import 'package:expense_planner/widgets/chart.dart';
+import './widgets/chart.dart';
 
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
@@ -66,6 +66,24 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
+  List<Transaction> get _monthlyTransactions {
+    return _userTransactions.where((tx) {
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 30),
+        ),
+      );
+    }).toList();
+  }
+
+  double get sumMonthlyTransaction {
+    double totalSum = 0.0;
+    for (int i = 0; i < _monthlyTransactions.length; i++) {
+      totalSum += _monthlyTransactions[i].amount;
+    }
+    return totalSum;
+  }
+
   void _addNewTransaction(String title, double amount, DateTime chosenDate) {
     final newTx = Transaction(
       id: DateTime.now().toString(),
@@ -120,11 +138,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: EdgeInsets.all(10),
                 width: double.infinity,
                 child: Chart(_recentTransactions)),
+            _recentTransactions.isEmpty
+                ? Text(
+                    'Total monthly spending: \$ 0',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  )
+                : Text(
+                    'Total monthly spending: \$ ${sumMonthlyTransaction}',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
             Container(
               padding: EdgeInsets.all(10),
-              child: Expanded(
-                  child:
-                      TransactionList(_userTransactions, _deleteTransaction)),
+              child: TransactionList(_userTransactions, _deleteTransaction),
             ),
           ],
         ),
