@@ -54,18 +54,29 @@ class _NewTransactionState extends State<NewTransaction> {
     return Card(
       elevation: 5,
       child: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.only(
+          top: 10,
+          left: 10,
+          right: 10,
+          bottom: 10,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             TextField(
               controller: _titleController,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
               decoration: const InputDecoration(
                 labelText: 'Title',
               ),
               onSubmitted: (_) => _submitData(),
             ),
             TextField(
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
               controller: _amountController,
               decoration: const InputDecoration(
                 labelText: 'Amount',
@@ -82,6 +93,8 @@ class _NewTransactionState extends State<NewTransaction> {
                       _selectedDate == null
                           ? 'No date chosen!'
                           : 'Picked Date:  ${DateFormat.yMd().format(_selectedDate as DateTime)}',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                   ),
                   TextButton(
